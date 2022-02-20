@@ -77,7 +77,6 @@ class Running(Training):
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
     COEFF_WALK_1 = 0.035
-    COEFF_WALK_2 = 2
     COEFF_WALK_3 = 0.029
 
     def __init__(self,
