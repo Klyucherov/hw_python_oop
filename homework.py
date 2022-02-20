@@ -1,3 +1,6 @@
+from typing import List, Dict, Union
+
+
 class InfoMessage:
     """Информационное сообщение о тренировке."""
 
@@ -26,7 +29,6 @@ class Training:
     """Базовый класс тренировки."""
     LEN_STEP = 0.65
     M_IN_KM = 1000
-    TRAINING_TYPE = ''
 
     def __init__(self,
                  action: int,
@@ -65,7 +67,6 @@ class Running(Training):
     """Тренировка: бег."""
     COEFF_CAL_1 = 18
     COEFF_CAL_2 = 20
-    TRAINING_TYPE = 'RUN'
 
     def get_spent_calories(self) -> float:
         cal = self.COEFF_CAL_1 * self.get_mean_speed() - self.COEFF_CAL_2
@@ -78,7 +79,6 @@ class SportsWalking(Training):
     COEFF_WALK_1 = 0.035
     COEFF_WALK_2 = 2
     COEFF_WALK_3 = 0.029
-    TRAINING_TYPE = 'WLK'
 
     def __init__(self,
                  action: int,
@@ -101,7 +101,6 @@ class Swimming(Training):
     COEFF_SW_1 = 1.1
     COEFF_SW_2 = 2
     LEN_STEP = 1.38
-    TRAINING_TYPE = 'SWM'
 
     def __init__(self,
                  action: int,
@@ -125,14 +124,14 @@ class Swimming(Training):
         return calories
 
 
-def read_package(workout_type: str, data: list) -> Training:
+def read_package(workout_type: str, data: List[Union[str, int]]) -> Training:
     """Прочитать данные полученные от датчиков."""
-    type_dict = {
+    sports_value: Dict[str] = {
         'SWM': Swimming,
         'RUN': Running,
         'WLK': SportsWalking
     }
-    return type_dict[workout_type](*data)
+    return sports_value[workout_type](*data)
 
 
 def main(training: Training) -> None:
